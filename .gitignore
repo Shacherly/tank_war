@@ -1,6 +1,7 @@
 # Compiled class file
 *.class
 
+
 # Log file
 *.log
 
@@ -11,7 +12,6 @@
 .mtj.tmp/
 
 # Package Files #
-*.jar
 *.war
 *.nar
 *.ear
@@ -19,5 +19,29 @@
 *.tar.gz
 *.rar
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+
+/target/
+/out/
+# 为啥把out加进去了，但是当时加进去肯定是有原因的……
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+/.classpath
+/.project
+*.classpath
+*.settings
+*.project
+/build/
+/bin/
