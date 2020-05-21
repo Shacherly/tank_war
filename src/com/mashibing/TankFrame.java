@@ -7,6 +7,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 public class TankFrame extends Frame {
+    private static final boolean KEY_PRESSED = true;
+    private static final boolean KEY_RELEASED = false;
 
     Tank myTank = new Tank(200, 200, Dir.DOWN);
 
@@ -69,10 +71,12 @@ public class TankFrame extends Frame {
     }
 
     class SlefKeyListener extends KeyAdapter {
-        boolean bL = false;
-        boolean bU = false;
-        boolean bR = false;
-        boolean bD = false;
+        // 上右下左四个方向为true表示keyPressed ，false表示keyRelease
+        boolean left = false;
+        boolean up = false;
+        boolean right = false;
+        boolean down = false;
+
 
         /**
          * Invoked when a key has been pressed.
@@ -84,23 +88,8 @@ public class TankFrame extends Frame {
             // x += 200;
             // 重新绘制窗口，我们无法主动调用上面重写的paint方法，因为Graphics画笔只有系统才有
             // repaint();
-            int key = e.getKeyCode();
-            switch (key) {
-                case KeyEvent.VK_LEFT:
-                    bL = true;
-                    break;
-                case KeyEvent.VK_UP:
-                    bU = true;
-                    break;
-                case KeyEvent.VK_RIGHT:
-                    bR = true;
-                    break;
-                case KeyEvent.VK_DOWN:
-                    bD = true;
-                    break;
-                default:
-                    break;
-            }
+            int keyCode = e.getKeyCode();
+            keyProcesser(keyCode, KEY_PRESSED);
 
             setMainTankDir();
         }
@@ -112,34 +101,43 @@ public class TankFrame extends Frame {
         @Override
         public void keyReleased(KeyEvent e) {
             // System.out.println("keyReleased");
-            int key = e.getKeyCode();
+            int keyCode = e.getKeyCode();
             // 切换方向
-            switch (key) {
-                case KeyEvent.VK_LEFT:
-                    bL = false;
-                    break;
-                case KeyEvent.VK_UP:
-                    bU = false;
-                    break;
-                case KeyEvent.VK_RIGHT:
-                    bR = false;
-                    break;
-                case KeyEvent.VK_DOWN:
-                    bD = false;
-                    break;
-                default:
-                    break;
-
-            }
+            keyProcesser(keyCode, KEY_RELEASED);
 
             setMainTankDir();
         }
 
         private void setMainTankDir() {
-            if (bL) myTank.setDir(Dir.LEFT);
-            if (bU) myTank.setDir(Dir.UP);
-            if (bR) myTank.setDir(Dir.RIGHT);
-            if (bD) myTank.setDir(Dir.DOWN);
+            if (!up && !right && !down && !left) myTank.setMoving(false);
+            else {
+                myTank.setMoving(true);
+                if (left) myTank.setDir(Dir.LEFT);
+                if (up) myTank.setDir(Dir.UP);
+                if (right) myTank.setDir(Dir.RIGHT);
+                if (down) myTank.setDir(Dir.DOWN);
+            }
+
+        }
+
+        private void keyProcesser(int keyCode, boolean keyStatus) {
+            switch (keyCode) {
+                // virtual key left
+                case KeyEvent.VK_LEFT:
+                    left = keyStatus;
+                    break;
+                case KeyEvent.VK_UP:
+                    up = keyStatus;
+                    break;
+                case KeyEvent.VK_RIGHT:
+                    right = keyStatus;
+                    break;
+                case KeyEvent.VK_DOWN:
+                    down = keyStatus;
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

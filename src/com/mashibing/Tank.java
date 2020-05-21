@@ -11,19 +11,22 @@ public class Tank {
     private int x, y;
     private Dir dir = Dir.DOWN;
     private static final int SPEED = 10;
+    private boolean moving = false;
 
-
-    @Override
-    public String toString() {
-        return "Tank{" +
-                "x=" + x +
-                ", y=" + y +
-                ", dir=" + dir +
-                '}';
+    public Tank(int x, int y, Dir dir) {
+        this.x = x;
+        this.y = y;
+        this.dir = dir;
     }
+
 
     public void paint(Graphics g) {
         g.fillRect(x, y, 50, 50);
+        move();
+    }
+
+    private void move() {
+        if (!moving) return;
         switch (dir) {
             case LEFT:
                 x -= SPEED;
@@ -38,7 +41,5 @@ public class Tank {
                 y += SPEED;
                 break;
         }
-        // x += 10;
-        // y += 10;
     }
 }
