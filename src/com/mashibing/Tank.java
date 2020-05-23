@@ -6,7 +6,9 @@ import lombok.NoArgsConstructor;
 
 import java.awt.*;
 
-@Data @AllArgsConstructor @NoArgsConstructor
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Tank {
     private int x, y;
     private Dir dir = Dir.DOWN;
@@ -24,9 +26,23 @@ public class Tank {
 
     public void paint(Graphics g) {
         Color c = g.getColor();
-        g.setColor(Color.YELLOW);
-        g.fillRect(x, y, 50, 50);
-        g.setColor(c);
+        // g.setColor(Color.YELLOW);
+        // g.fillRect(x, y, 50, 50);
+        // g.setColor(c);
+        switch (dir) {
+            case UP:
+                g.drawImage(ResourceMgr.tankUp, x, y, null);
+                break;
+            case RIGHT:
+                g.drawImage(ResourceMgr.tankRight, x, y, null);
+                break;
+            case DOWN:
+                g.drawImage(ResourceMgr.tankDown, x, y, null);
+                break;
+            case LEFT:
+                g.drawImage(ResourceMgr.tankLeft, x, y, null);
+                break;
+        }
         move();
     }
 

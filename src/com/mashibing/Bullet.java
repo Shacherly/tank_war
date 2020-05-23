@@ -8,6 +8,7 @@ import java.awt.*;
 public class Bullet {
     private static final int SPEED = 2;
     private static final int WIDTH = 30, HEIGHT = 30;
+    // x y 是坐标
     private int x, y;
     private Dir dir;
     private TankFrame tf = null;
@@ -23,11 +24,26 @@ public class Bullet {
     public void paint(Graphics g) {
         // if (!alive) tf.bullets.remove(this);
         tf.bullets.removeIf(b -> !b.alive);
-        Color oldColor = g.getColor();
+        /*Color oldColor = g.getColor();
         g.setColor(Color.RED);
         // 圆形子弹
         g.fillOval(x, y, WIDTH, HEIGHT);
-        g.setColor(oldColor);
+        g.setColor(oldColor);*/
+        switch (dir) {
+            case UP:
+                g.drawImage(ResourceMgr.bulletUp, x, y, null);
+                break;
+            case RIGHT:
+                g.drawImage(ResourceMgr.bulletRight, x, y, null);
+                break;
+            case DOWN:
+                g.drawImage(ResourceMgr.bulletDown, x, y, null);
+                break;
+            case LEFT:
+                g.drawImage(ResourceMgr.bulletLeft, x, y, null);
+                break;
+
+        }
         move();
     }
 
