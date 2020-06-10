@@ -6,15 +6,21 @@ import java.awt.*;
  * 子弹类
  */
 public class Bullet {
-    private static final int SPEED = 2;
-    private static final int WIDTH = 30, HEIGHT = 30;
+    private static final int SPEED = 7;
+    // 子弹的宽高
+    public static final int WIDTH, HEIGHT;
     // x y 是坐标
     private int x, y;
     private Dir dir;
     private TankFrame tf = null;
     private boolean alive = true;
 
-    public Bullet(int x, int y, Dir dir,TankFrame tf) {
+    static {
+        WIDTH = ResourceMgr.bulletUp.getWidth();
+        HEIGHT = ResourceMgr.bulletUp.getHeight();
+    }
+
+    public Bullet(int x, int y, Dir dir, TankFrame tf) {
         this.x = x;
         this.y = y;
         this.dir = dir;
@@ -62,7 +68,7 @@ public class Bullet {
                 y += SPEED;
                 break;
         }
-        if (x < 0 || y < 0 || x > TankFrame.GAME_WIDTH || y >TankFrame.GAME_HEIGHT) alive = false;
+        if (x < 0 || y < 0 || x > TankFrame.GAME_WIDTH || y > TankFrame.GAME_HEIGHT) alive = false;
     }
 
 }

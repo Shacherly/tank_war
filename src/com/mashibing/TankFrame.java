@@ -91,7 +91,7 @@ public class TankFrame extends Frame {
 
 
         // 确实可以吧myTank的各个属性都取出来使用，但是这样显然破坏了封装的思想，
-        /*那我直接把这些方法封装到Tank类中
+        /*那我直接把这些方法封装到Tank类中move方法，移动是应该是自己主动说移动
         g.fillRect(x, y, 50, 50);
         switch (dir) {
             case LEFT:
@@ -148,7 +148,7 @@ public class TankFrame extends Frame {
         }
 
         private void setMainTankDir() {
-            if (!up && !right && !down && !left) myTank.setMoving(false);
+            if ((!up && !right && !down && !left)) myTank.setMoving(false);
             else {
                 myTank.setMoving(true);
                 if (left) myTank.setDir(Dir.LEFT);

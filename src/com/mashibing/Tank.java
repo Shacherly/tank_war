@@ -5,16 +5,28 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.awt.*;
+import java.util.Objects;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Tank {
+    // 左上角绝对坐标
     private int x, y;
     private Dir dir = Dir.DOWN;
     private static final int SPEED = 5;
     private boolean moving = false;
     private TankFrame tf = null;
+    // 是否触碰到边缘
+    private boolean border = false;
+
+    // 坦克的宽高
+    public static final int WIDTH, HEIGHT;
+
+    static {
+        WIDTH = ResourceMgr.tankUp.getWidth();
+        HEIGHT = ResourceMgr.tankUp.getHeight();
+    }
 
     public Tank(int x, int y, Dir dir, TankFrame tf) {
         this.x = x;
@@ -47,26 +59,37 @@ public class Tank {
     }
 
     private void move() {
+        // 移动过程中需要自己判断是否触碰边界
+        // 其实本来可以在TankFrame中获取到x, y坐标进行判断，但是
+
         if (!moving) return;
         switch (dir) {
             case LEFT:
-                x -= SPEED;
+                if (x != 0)// 如果左边缘了则不让移动的
+                    x -= SPEED;
                 break;
             case UP:
-                y -= SPEED;
+                if (y != 0)
+                    y -= SPEED;
                 break;
             case RIGHT:
-                x += SPEED;
+                if (x != TankFrame.GAME_WIDTH - WIDTH)
+                    x += SPEED;
                 break;
             case DOWN:
-                y += SPEED;
+                if (y != TankFrame.GAME_HEIGHT - HEIGHT)
+                    y += SPEED;
                 break;
         }
+
     }
 
     public void fire() {
         // frame窗口中需要子弹对象
         // tf.bullet = new Bullet(x, y, dir);// 单个子弹可以new
-        tf.bullets.add(new Bullet(x, y, dir, tf));// 多个子弹就加进去
+        System.out.println(String.format("宽：%s,高：%s", WIDTH, HEIGHT));
+        tf.bullets.add(
+                new Bullet(x + (WIDTH - Bullet.WIDTH) / 2, y + (HEIGHT - Bullet.HEIGHT) / 2, dir, tf)
+        );// 多个子弹就加进去
     }
 }
